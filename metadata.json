@@ -1,0 +1,7 @@
+{
+  "name": "KIMIXCHANGE - AI Face Swap",
+  "description": "Production-ready AI face swap platform with high-fidelity blending, identity consistency, and ethical safeguards.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
