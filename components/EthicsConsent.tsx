@@ -18,8 +18,9 @@ export const EthicsConsent: React.FC<EthicsConsentProps> = ({ onAccept }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </div>
-        <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tighter uppercase italic text-zinc-900 dark:text-white leading-none">
-          SECURE<br/><span className="text-brand-red">ENTRY</span>
+        <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tighter uppercase italic leading-none whitespace-nowrap">
+          <span className="text-zinc-900 dark:text-white transition-colors duration-300">SECURE</span>
+          <span className="text-brand-red ml-2">ENTRY</span>
         </h1>
         <p className="text-zinc-500 text-sm max-w-md mx-auto font-medium">Authentication required. Validate neural usage guidelines to proceed.</p>
       </div>
