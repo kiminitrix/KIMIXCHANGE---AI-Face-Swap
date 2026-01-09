@@ -11,29 +11,52 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onSidebarToggle, isSidebarOpen, isDarkMode, toggleDarkMode }) => {
   return (
-    <header className="h-16 md:h-20 border-b border-gray-800/50 flex items-center justify-between px-6 sticky top-0 bg-brand-black/80 backdrop-blur-md z-40">
+    <header className={`h-20 border-b flex items-center justify-between px-6 md:px-10 sticky top-0 z-40 backdrop-blur-xl transition-all duration-300 ${
+      isDarkMode ? 'bg-black/80 border-zinc-900/50' : 'bg-white/80 border-zinc-200/50'
+    }`}>
       <div className="flex items-center gap-4">
         <button 
           onClick={onSidebarToggle}
-          className="md:hidden p-2 rounded-lg hover:bg-white/5"
+          className={`p-2.5 rounded-xl transition-all ${
+            isDarkMode ? 'hover:bg-white/5 text-zinc-500 hover:text-white' : 'hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900'
+          }`}
+          aria-label={isSidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-          </svg>
+          {isSidebarOpen ? (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          )}
         </button>
         {!isSidebarOpen && (
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-3">
             {CROWN_LOGO}
-            <span className="font-bold tracking-tighter">KIMIXCHANGE</span>
+            <span className="font-black tracking-tighter italic">
+              <span className="text-zinc-900 dark:text-white transition-colors duration-300">KIMI</span>
+              <span className="text-brand-red">XCHANGE</span>
+            </span>
           </div>
         )}
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4 md:gap-6">
+        <div className="hidden sm:flex items-center gap-2.5 px-4 py-1.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-full transition-colors duration-300">
+          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-[10px] font-black tracking-widest text-zinc-500 uppercase italic">Inference Mode</span>
+        </div>
+        
         <button
           onClick={toggleDarkMode}
-          className="p-2.5 rounded-full hover:bg-white/5 transition-colors text-gray-400 hover:text-white"
-          title="Toggle Dark/Light Mode"
+          className={`p-3 rounded-full transition-all border ${
+            isDarkMode 
+              ? 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700' 
+              : 'bg-zinc-50 border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-300'
+          }`}
+          aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
           {isDarkMode ? (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,10 +68,6 @@ export const Header: React.FC<HeaderProps> = ({ onSidebarToggle, isSidebarOpen, 
             </svg>
           )}
         </button>
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-xs font-semibold text-green-500">GPU ACCELERATED</span>
-        </div>
       </div>
     </header>
   );

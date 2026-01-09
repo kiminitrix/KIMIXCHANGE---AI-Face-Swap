@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { FaceSwapWorkflow } from './components/FaceSwapWorkflow';
@@ -12,7 +12,15 @@ const App: React.FC = () => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isDarkMode, setIsDarkMode] = useState(true);
 
-  // Initialize history from localStorage
+  // Sync theme with document element
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   useEffect(() => {
     const saved = localStorage.getItem('kimixchange_history');
     if (saved) {
@@ -24,41 +32,46 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleConsent = () => {
-    setStep(WorkflowStep.UPLOAD_SOURCE);
-  };
+  const handleConsent = () => setStep(WorkflowStep.UPLOAD_SOURCE);
 
   const addToHistory = (item: HistoryItem) => {
-    const newHistory = [item, ...history].slice(0, 20); // Keep last 20
+    const newHistory = [item, ...history].slice(0, 20);
     setHistory(newHistory);
     localStorage.setItem('kimixchange_history', JSON.stringify(newHistory));
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className={`min-h-screen flex transition-colors duration-300 ${isDarkMode ? 'bg-brand-black text-white' : 'bg-gray-50 text-brand-black'}`}>
+    <div className={`min-h-screen flex transition-colors duration-300 ${isDarkMode ? 'bg-black text-white' : 'bg-white text-zinc-900'}`}>
+      {/* Sidebar Overlay for Mobile */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+
       {/* Sidebar */}
       <Sidebar 
         isOpen={isSidebarOpen} 
-        onToggle={() => setSidebarOpen(!isSidebarOpen)} 
+        onToggle={toggleSidebar} 
         currentStep={step}
         setStep={setStep}
       />
 
-      {/* Main Content */}
-      <main className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${isSidebarOpen ? 'ml-0 md:ml-64' : 'ml-0'}`}>
+      {/* Main Content Area */}
+      <main className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${isSidebarOpen ? 'md:ml-64' : 'ml-0'}`}>
         <Header 
-          onSidebarToggle={() => setSidebarOpen(!isSidebarOpen)} 
+          onSidebarToggle={toggleSidebar} 
           isSidebarOpen={isSidebarOpen}
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
         />
 
-        <div className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
+        {/* Padding reduced from p-6/p-10 to p-4/p-6 to help fit content without scrolling */}
+        <div className="flex-1 p-4 md:p-6 max-w-7xl mx-auto w-full flex flex-col justify-center">
           {step === WorkflowStep.CONSENT ? (
             <EthicsConsent onAccept={handleConsent} />
           ) : (
@@ -66,13 +79,13 @@ const App: React.FC = () => {
               currentStep={step}
               onStepChange={setStep}
               onResultReady={addToHistory}
+              isDarkMode={isDarkMode}
             />
           )}
         </div>
 
-        {/* Footer */}
-        <footer className="p-6 text-center text-sm text-gray-500 border-t border-gray-800/50">
-          <p>© 2024 KIMIXCHANGE AI. All images processed locally or deleted within 72 hours. Ethical AI Use Enforced.</p>
+        <footer className="p-4 text-center text-[10px] font-semibold text-zinc-400 dark:text-zinc-600 border-t border-zinc-100 dark:border-zinc-900">
+          <p>© 2025 KIMIXCHANGE AI • HIGH-FIDELITY NEURAL SYNTHESIS</p>
         </footer>
       </main>
     </div>
