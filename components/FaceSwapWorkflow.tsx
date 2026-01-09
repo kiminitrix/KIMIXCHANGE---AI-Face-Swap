@@ -118,7 +118,10 @@ export const FaceSwapWorkflow: React.FC<FaceSwapWorkflowProps> = ({ currentStep,
       {!isProcessing && currentStep === WorkflowStep.UPLOAD_SOURCE && (
         <div className="max-w-xl mx-auto space-y-6">
           <div className="text-center">
-            <h1 className="text-4xl font-black mb-2 tracking-tighter italic uppercase text-zinc-900 dark:text-white">Identity<br/><span className="text-brand-red">Source</span></h1>
+            <h1 className="text-4xl font-black mb-2 tracking-tighter italic uppercase whitespace-nowrap">
+              <span className="text-zinc-900 dark:text-white transition-colors duration-300">IDENTITY</span>
+              <span className="text-brand-red ml-2">SOURCE</span>
+            </h1>
             <p className="text-zinc-500 text-sm font-medium">Upload the face that will define the new persona.</p>
           </div>
           <div 
@@ -140,7 +143,10 @@ export const FaceSwapWorkflow: React.FC<FaceSwapWorkflowProps> = ({ currentStep,
       {!isProcessing && currentStep === WorkflowStep.UPLOAD_TARGET && (
         <div className="max-w-xl mx-auto space-y-6">
           <div className="text-center">
-            <h1 className="text-4xl font-black mb-2 tracking-tighter italic uppercase text-zinc-900 dark:text-white">Target<br/><span className="text-brand-red">Scene</span></h1>
+            <h1 className="text-4xl font-black mb-2 tracking-tighter italic uppercase whitespace-nowrap">
+              <span className="text-zinc-900 dark:text-white transition-colors duration-300">TARGET</span>
+              <span className="text-brand-red ml-2">SCENE</span>
+            </h1>
             <p className="text-zinc-500 text-sm font-medium">Select the environment for the synthesis.</p>
           </div>
           <div className="flex items-center gap-4 bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800">
@@ -172,7 +178,10 @@ export const FaceSwapWorkflow: React.FC<FaceSwapWorkflowProps> = ({ currentStep,
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto">
           <div className="lg:col-span-5 space-y-6">
             <div className="space-y-2 text-center lg:text-left">
-              <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic text-zinc-900 dark:text-white leading-[0.9]">Master<br/><span className="text-brand-red">Synthetics</span></h1>
+              <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic leading-none whitespace-nowrap">
+                <span className="text-zinc-900 dark:text-white transition-colors duration-300">MASTER</span>
+                <span className="text-brand-red ml-2">SYNTHETICS</span>
+              </h1>
               <p className="text-zinc-500 text-sm font-medium">Identity successfully merged.</p>
             </div>
             
